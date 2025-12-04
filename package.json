@@ -1,0 +1,54 @@
+{
+  "name": "timeline-tool",
+  "version": "1.0.0",
+  "description": "A pure data-driven timeline tool similar to Unity Timeline",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:verbose": "jest --verbose",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "clean": "rimraf dist coverage",
+    "dev": "tsc --watch",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "keywords": [
+    "timeline",
+    "animation",
+    "video-editing",
+    "data-driven",
+    "typescript",
+    "pure-functions"
+  ],
+  "author": "Timeline Tool Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^29.5.5",
+    "@types/node": "^20.6.3",
+    "@typescript-eslint/eslint-plugin": "^6.7.2",
+    "@typescript-eslint/parser": "^6.7.2",
+    "eslint": "^8.49.0",
+    "jest": "^29.7.0",
+    "rimraf": "^5.0.5",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {},
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/timeline-tool.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/timeline-tool/issues"
+  },
+  "homepage": "https://github.com/your-username/timeline-tool#readme"
+}
