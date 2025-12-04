@@ -2,6 +2,9 @@
  * 测试环境配置
  */
 
+// 导入 React Testing Library 的扩展
+import '@testing-library/jest-dom';
+
 // 全局测试配置
 const originalConsole = { ...console };
 (globalThis as any).console = {
@@ -12,6 +15,40 @@ const originalConsole = { ...console };
   log: originalConsole.log,
   info: originalConsole.info,
   debug: originalConsole.debug,
+};
+
+// 模拟 DOM 方法
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: jest.fn().mockImplementation(query => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(), // 废弃
+    removeListener: jest.fn(), // 废弃
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+});
+
+// 模拟 IntersectionObserver
+global.IntersectionObserver = class IntersectionObserver {
+  constructor() {}
+  disconnect() {}
+  observe() {}
+  unobserve() {}
+  takeRecords() {
+    return [];
+  }
+} as any;
+
+// 模拟 ResizeObserver
+global.ResizeObserver = class ResizeObserver {
+  constructor() {}
+  disconnect() {}
+  observe() {}
+  unobserve() {}
 };
 
 // 模拟定时器

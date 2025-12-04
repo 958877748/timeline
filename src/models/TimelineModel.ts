@@ -71,27 +71,43 @@ export class TimelineModel {
       case 'REMOVE_TRACK':
         this.removeTrack(action.payload.trackId);
         break;
+      case 'UPDATE_TRACK_NAME':
+        this.updateTrackName(action.payload.trackId, action.payload.name);
+        break;
       case 'ADD_OBJECT':
         this.addObject(action.payload.trackId, action.payload.object);
         break;
       case 'REMOVE_OBJECT':
-        this.removeObject(action.payload.trackId, action.payload.objectId);
+        this.removeObjectById(action.payload.objectId);
         break;
       case 'UPDATE_OBJECT':
-        this.updateObject(action.payload.trackId, action.payload.objectId, action.payload.updates);
+        this.updateObjectById(action.payload.objectId, action.payload.updates);
         break;
       case 'SELECT_OBJECT':
         this.selectObject(action.payload.objectId);
         break;
       case 'SET_ZOOM':
+      case 'SET_ZOOM_LEVEL':
         this.setZoom(action.payload.zoomLevel);
         break;
       case 'SET_SCROLL':
+      case 'SET_SCROLL_POSITION':
         this.setScroll(action.payload.scrollPosition);
         break;
       case 'MOVE_OBJECT':
-        this.moveObject(action.payload.fromTrackId, action.payload.toTrackId, action.payload.objectId, action.payload.newStartTime);
+        if ('fromTrackId' in action.payload) {
+          // 旧版本的移动操作
+          this.moveObject(action.payload.fromTrackId, action.payload.toTrackId, action.payload.objectId, action.payload.newStartTime);
+        } else {
+          // 新版本的移动操作
+          this.moveObjectById(action.payload.objectId, action.payload.newStartTime, action.payload.newTrackId);
+        }
         break;
+      case 'DUPLICATE_OBJECT':
+        this.duplicateObjectById(action.payload.objectId);
+        break;
+      default:
+        throw new Error(`Unknown action type: ${(action as any).type}`);
     }
   }
 
@@ -160,6 +176,81 @@ export class TimelineModel {
     if (!object) return;
 
     Object.assign(object, updates);
+  }
+
+  /**
+   * 通过对象ID更新对象（不指定轨道）
+   */
+  private updateObjectById(objectId: string, updates: Partial<TimelineObject>): void {
+    const track = this.findTrackByObjectId(objectId);
+    if (!track) return;
+    this.updateObject(track.id, objectId, updates);
+  }
+
+  /**
+   * 通过对象ID移除对象（不指定轨道）
+   */
+  private removeObjectById(objectId: string): void {
+    const track = this.findTrackByObjectId(objectId);
+    if (!track) return;
+    this.removeObject(track.id, objectId);
+  }
+
+  /**
+   * 通过对象ID移动对象
+   */
+  private moveObjectById(objectId: string, newStartTime: number, newTrackId?: string): void {
+    const currentTrack = this.findTrackByObjectId(objectId);
+    if (!currentTrack) return;
+
+    const object = currentTrack.objects.find(obj => obj.id === objectId);
+    if (!object) return;
+
+    if (newTrackId && newTrackId !== currentTrack.id) {
+      // 移动到不同轨道
+      const newTrack = this.state.tracks.find(t => t.id === newTrackId);
+      if (!newTrack) return;
+
+      // 从原轨道移除
+      currentTrack.objects = currentTrack.objects.filter(obj => obj.id !== objectId);
+
+      // 更新开始时间
+      const updatedObject = { ...object, startTime: newStartTime };
+
+      // 添加到新轨道
+      newTrack.objects.push(updatedObject);
+    } else {
+      // 在同一轨道内移动
+      object.startTime = newStartTime;
+    }
+  }
+
+  /**
+   * 通过对象ID复制对象
+   */
+  private duplicateObjectById(objectId: string): void {
+    const track = this.findTrackByObjectId(objectId);
+    if (!track) return;
+
+    const object = track.objects.find(obj => obj.id === objectId);
+    if (!object) return;
+
+    const duplicatedObject = {
+      ...object,
+      id: this.generateId(),
+      startTime: object.startTime + 1 // 稍微偏移一点时间
+    };
+
+    track.objects.push(duplicatedObject);
+  }
+
+  /**
+   * 更新轨道名称
+   */
+  private updateTrackName(trackId: string, name: string): void {
+    const track = this.state.tracks.find(t => t.id === trackId);
+    if (!track) return;
+    track.name = name;
   }
 
   /**
@@ -270,10 +361,83 @@ export class TimelineModel {
   }
 
   /**
+   * 根据轨道ID获取轨道
+   */
+  getTrackById(trackId: string): Track | null {
+    return this.state.tracks.find(track => track.id === trackId) || null;
+  }
+
+  /**
+   * 根据对象ID获取对象
+   */
+  getObjectById(objectId: string): TimelineObject | null {
+    return this.findObjectById(objectId);
+  }
+
+  /**
+   * 获取指定时间范围内的对象
+   */
+  getObjectsInTimeRange(startTime: number, endTime: number): TimelineObject[] {
+    const objects: TimelineObject[] = [];
+
+    for (const track of this.state.tracks) {
+      for (const object of track.objects) {
+        const objEndTime = object.type === 'duration' && object.duration
+          ? object.startTime + object.duration
+          : object.startTime;
+
+        if (object.startTime <= endTime && objEndTime >= startTime) {
+          objects.push(object);
+        }
+      }
+    }
+
+    return objects;
+  }
+
+  /**
+   * 验证当前状态
+   */
+  validate(): { errors: string[]; warnings: string[] } {
+    const errors: string[] = [];
+    const warnings: string[] = [];
+
+    // 检查重叠对象
+    for (const track of this.state.tracks) {
+      const trackObjects = [...track.objects].sort((a, b) => a.startTime - b.startTime);
+
+      for (let i = 0; i < trackObjects.length - 1; i++) {
+        const current = trackObjects[i];
+        const next = trackObjects[i + 1];
+
+        const currentEnd = current.type === 'duration' && current.duration
+          ? current.startTime + current.duration
+          : current.startTime;
+
+        if (currentEnd > next.startTime) {
+          warnings.push(`轨道 "${track.name}" 中的对象在时间 ${next.startTime} 处重叠`);
+        }
+      }
+    }
+
+    // 检查时间轴范围
+    const timeRange = this.getTimeRange();
+    if (timeRange.start < 0) {
+      errors.push('时间轴开始时间不能为负数');
+    }
+
+    if (timeRange.end <= timeRange.start) {
+      errors.push('时间轴结束时间必须大于开始时间');
+    }
+
+    return { errors, warnings };
+  }
+
+  /**
    * 生成唯一ID
    */
   private generateId(): string {
-    return `id_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `id_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`;
   }
 
   /**

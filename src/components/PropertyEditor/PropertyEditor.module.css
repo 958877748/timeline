@@ -1,0 +1,227 @@
+.propertyEditor {
+  width: 100%;
+  height: 100%;
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.editorContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: #888;
+}
+
+.emptyState h3 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  color: #ccc;
+}
+
+.emptyState p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.section {
+  margin-bottom: 24px;
+}
+
+.section:last-child {
+  margin-bottom: 0;
+}
+
+.section h4 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  border-bottom: 1px solid #333;
+  padding-bottom: 8px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
+.field:last-child {
+  margin-bottom: 0;
+}
+
+.field label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #cccccc;
+  margin-bottom: 4px;
+}
+
+.field input {
+  padding: 8px 12px;
+  background-color: #2d2d30;
+  color: #ffffff;
+  border: 1px solid #444;
+  border-radius: 4px;
+  font-size: 13px;
+  transition: border-color 0.2s ease;
+}
+
+.field input:focus {
+  outline: none;
+  border-color: #0e639c;
+  box-shadow: 0 0 0 2px rgba(14, 99, 156, 0.3);
+}
+
+.field input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+
+.field input.readOnly {
+  background-color: #252526;
+  color: #888;
+  cursor: not-allowed;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.button,
+.buttonDanger {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex: 1;
+}
+
+.button {
+  background-color: #0e639c;
+  color: white;
+}
+
+.button:hover {
+  background-color: #1177bb;
+}
+
+.button:active {
+  background-color: #0d5a8f;
+}
+
+.buttonDanger {
+  background-color: #d32f2f;
+  color: white;
+}
+
+.buttonDanger:hover {
+  background-color: #f44336;
+}
+
+.buttonDanger:active {
+  background-color: #c62828;
+}
+
+/* 滚动条样式 */
+.editorContent::-webkit-scrollbar {
+  width: 8px;
+}
+
+.editorContent::-webkit-scrollbar-track {
+  background: #2d2d30;
+}
+
+.editorContent::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+.editorContent::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .propertyEditor {
+    font-size: 12px;
+  }
+
+  .editorContent {
+    padding: 12px;
+  }
+
+  .section h4 {
+    font-size: 13px;
+  }
+
+  .field input {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .button,
+  .buttonDanger {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}
+
+/* 暗色主题适配 */
+@media (prefers-color-scheme: light) {
+  .propertyEditor {
+    background-color: #ffffff;
+    border-color: #e0e0e0;
+    color: #333333;
+  }
+
+  .emptyState {
+    color: #666;
+  }
+
+  .emptyState h3 {
+    color: #333;
+  }
+
+  .section h4 {
+    color: #000000;
+    border-bottom-color: #e0e0e0;
+  }
+
+  .field label {
+    color: #666;
+  }
+
+  .field input {
+    background-color: #f5f5f5;
+    color: #333;
+    border-color: #ccc;
+  }
+
+  .field input:focus {
+    border-color: #0e639c;
+  }
+
+  .field input.readOnly {
+    background-color: #fafafa;
+    color: #888;
+  }
+}

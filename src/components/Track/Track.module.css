@@ -1,0 +1,211 @@
+.trackContainer {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #333;
+  background-color: #252526;
+}
+
+.trackContainer:last-child {
+  border-bottom: none;
+}
+
+.trackHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  padding: 0 12px;
+  background-color: #2d2d30;
+  border-bottom: 1px solid #333;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.trackHeader:hover {
+  background-color: #333;
+}
+
+.trackControls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.expandButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  background-color: transparent;
+  color: #cccccc;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.expandButton:hover {
+  background-color: #444;
+  color: #ffffff;
+}
+
+.expandButton.expanded {
+  transform: rotate(90deg);
+}
+
+.trackName {
+  font-size: 13px;
+  font-weight: 500;
+  color: #ffffff;
+  user-select: none;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: background-color 0.2s ease;
+}
+
+.trackName:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.renameInput {
+  font-size: 13px;
+  font-weight: 500;
+  color: #ffffff;
+  background-color: #1e1e1e;
+  border: 1px solid #0e639c;
+  border-radius: 3px;
+  padding: 2px 6px;
+  outline: none;
+  width: 150px;
+}
+
+.renameInput:focus {
+  border-color: #1177bb;
+  box-shadow: 0 0 0 2px rgba(14, 99, 156, 0.3);
+}
+
+.trackActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.objectCount {
+  font-size: 11px;
+  color: #888;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 2px 6px;
+  border-radius: 10px;
+  min-width: 20px;
+  text-align: center;
+}
+
+.deleteButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  background-color: transparent;
+  color: #888;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.deleteButton:hover {
+  background-color: #d32f2f;
+  color: white;
+}
+
+.trackContent {
+  position: relative;
+  min-height: 60px;
+  background-color: #252526;
+  overflow: hidden;
+  cursor: crosshair;
+}
+
+.gridBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.objectsContainer {
+  position: relative;
+  height: 100%;
+  min-height: 60px;
+}
+
+.emptyTrack {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  color: #666;
+  font-size: 12px;
+  user-select: none;
+}
+
+.emptyTrack p {
+  margin: 0;
+  padding: 8px 16px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 2px dashed #444;
+  border-radius: 4px;
+}
+
+/* 拖拽状态 */
+.trackContent.dragOver {
+  background-color: rgba(14, 99, 156, 0.1);
+  border: 2px dashed #0e639c;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .trackHeader {
+    height: 36px;
+    padding: 0 10px;
+  }
+
+  .trackControls {
+    gap: 6px;
+  }
+
+  .expandButton {
+    width: 18px;
+    height: 18px;
+  }
+
+  .trackName {
+    font-size: 12px;
+  }
+
+  .renameInput {
+    font-size: 12px;
+    width: 120px;
+  }
+
+  .trackContent {
+    min-height: 50px;
+  }
+
+  .objectsContainer {
+    min-height: 50px;
+  }
+
+  .emptyTrack {
+    height: 50px;
+    font-size: 11px;
+  }
+}

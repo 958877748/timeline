@@ -1,0 +1,179 @@
+.controlsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background-color: #2d2d30;
+  border-bottom: 1px solid #333;
+  min-height: 48px;
+}
+
+.leftSection {
+  flex: 1;
+}
+
+.title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  user-select: none;
+}
+
+.centerSection {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.rightSection {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.zoomControls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #1e1e1e;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #333;
+}
+
+.controlButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  background-color: transparent;
+  color: #cccccc;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.controlButton:hover {
+  background-color: #333;
+  color: #ffffff;
+  border-color: #555;
+}
+
+.controlButton:active {
+  background-color: #444;
+  transform: scale(0.95);
+}
+
+.controlButton:focus {
+  outline: 2px solid #0e639c;
+  outline-offset: 2px;
+}
+
+.zoomLevel {
+  font-size: 12px;
+  font-weight: 500;
+  color: #cccccc;
+  min-width: 40px;
+  text-align: center;
+  user-select: none;
+  cursor: default;
+}
+
+.addTrackButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background-color: #0e639c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.addTrackButton:hover {
+  background-color: #1177bb;
+}
+
+.addTrackButton:active {
+  background-color: #0d5a8f;
+  transform: scale(0.98);
+}
+
+.addTrackButton:focus {
+  outline: 2px solid #0e639c;
+  outline-offset: 2px;
+}
+
+.addIcon {
+  flex-shrink: 0;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .controlsContainer {
+    padding: 8px 12px;
+    min-height: 40px;
+  }
+
+  .title {
+    font-size: 14px;
+  }
+
+  .zoomControls {
+    gap: 6px;
+    padding: 3px 6px;
+  }
+
+  .controlButton {
+    width: 24px;
+    height: 24px;
+  }
+
+  .zoomLevel {
+    font-size: 11px;
+    min-width: 36px;
+  }
+
+  .addTrackButton {
+    padding: 4px 8px;
+    font-size: 11px;
+    gap: 4px;
+  }
+
+  .addTrackButton svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .controlsContainer {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .leftSection,
+  .centerSection,
+  .rightSection {
+    flex: none;
+    width: 100%;
+  }
+
+  .centerSection {
+    order: -1;
+  }
+
+  .rightSection {
+    display: flex;
+    justify-content: center;
+  }
+}

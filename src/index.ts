@@ -1,8 +1,10 @@
 /**
- * 时间轴工具 - 纯数据版本
+ * 时间轴工具 - 纯数据版本 + React UI
  *
  * 这是一个基于纯数据模型的时间轴工具，提供完整的数据结构定义、操作函数和验证机制。
  * 所有功能都通过纯函数和不可变数据操作实现，便于测试和维护。
+ *
+ * 新增React UI层，提供完整的可视化界面。
  */
 
 // 类型定义
@@ -28,6 +30,9 @@ export {
   createEducationalTimelineState,
   getAllMockData
 } from './data/mockData';
+
+// React UI层（可选导入）
+export * from './react';
 
 // 版本信息
 export const VERSION = '1.0.0';
@@ -60,7 +65,11 @@ export function getToolInfo() {
       'Property templates',
       'Time-based operations',
       'Zoom and scroll management',
-      'Object selection and manipulation'
+      'Object selection and manipulation',
+      'React UI components',
+      'Tweakpane property editor',
+      'Drag and drop support',
+      'Responsive design'
     ]
   };
 }

@@ -1,0 +1,1 @@
+export { TimelineAdapter, createTimelineAdapter } from './TimelineAdapter';

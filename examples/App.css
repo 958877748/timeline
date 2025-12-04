@@ -1,0 +1,273 @@
+/* 应用主样式 */
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #1e1e1e;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* 头部 */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background-color: #2d2d30;
+  border-bottom: 1px solid #333;
+  min-height: 60px;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.playback-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.play-button,
+.stop-button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background-color: #0e639c;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.play-button:hover,
+.stop-button:hover {
+  background-color: #1177bb;
+  transform: scale(1.05);
+}
+
+.play-button.playing {
+  background-color: #d32f2f;
+}
+
+.play-button.playing:hover {
+  background-color: #f44336;
+}
+
+.time-display {
+  font-size: 16px;
+  font-weight: 500;
+  color: #cccccc;
+  min-width: 80px;
+  text-align: right;
+}
+
+/* 主内容区 */
+.app-main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.timeline-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.property-section {
+  width: 320px;
+  min-width: 300px;
+  background-color: #252526;
+  border-left: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-component {
+  flex: 1;
+  margin: 16px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.property-editor {
+  flex: 1;
+  margin: 16px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* 底部 */
+.app-footer {
+  display: flex;
+  padding: 16px 24px;
+  background-color: #2d2d30;
+  border-top: 1px solid #333;
+  gap: 32px;
+}
+
+.info-panel,
+.stats-panel {
+  flex: 1;
+}
+
+.info-panel h3,
+.stats-panel h3 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.info-panel ul {
+  margin: 0;
+  padding-left: 20px;
+  color: #cccccc;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.stats-panel p {
+  margin: 6px 0;
+  color: #cccccc;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .property-section {
+    width: 280px;
+    min-width: 260px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-header {
+    flex-direction: column;
+    gap: 16px;
+    padding: 12px 16px;
+  }
+
+  .app-header h1 {
+    font-size: 20px;
+  }
+
+  .app-main {
+    flex-direction: column;
+  }
+
+  .property-section {
+    width: 100%;
+    height: 300px;
+    border-left: none;
+    border-top: 1px solid #333;
+  }
+
+  .timeline-component {
+    margin: 12px;
+  }
+
+  .property-editor {
+    margin: 12px;
+  }
+
+  .app-footer {
+    flex-direction: column;
+    gap: 16px;
+    padding: 12px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header {
+    padding: 8px 12px;
+  }
+
+  .playback-controls {
+    gap: 8px;
+  }
+
+  .play-button,
+  .stop-button {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .time-display {
+    font-size: 14px;
+    min-width: 70px;
+  }
+
+  .timeline-component {
+    margin: 8px;
+  }
+
+  .property-editor {
+    margin: 8px;
+  }
+
+  .app-footer {
+    padding: 8px 12px;
+  }
+
+  .info-panel h3,
+  .stats-panel h3 {
+    font-size: 14px;
+  }
+
+  .info-panel ul,
+  .stats-panel p {
+    font-size: 12px;
+  }
+}
+
+/* 暗色主题 */
+@media (prefers-color-scheme: light) {
+  .app {
+    background-color: #ffffff;
+    color: #333333;
+  }
+
+  .app-header,
+  .app-footer {
+    background-color: #f5f5f5;
+    border-color: #e0e0e0;
+  }
+
+  .app-header h1,
+  .info-panel h3,
+  .stats-panel h3 {
+    color: #000000;
+  }
+
+  .property-section {
+    background-color: #fafafa;
+    border-color: #e0e0e0;
+  }
+
+  .timeline-component,
+  .property-editor {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .time-display,
+  .info-panel ul,
+  .stats-panel p {
+    color: #666666;
+  }
+}

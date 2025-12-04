@@ -1,0 +1,235 @@
+.timelineObject {
+  position: absolute;
+  top: 8px;
+  height: calc(100% - 16px);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  min-width: 60px;
+  max-width: 200px;
+  overflow: hidden;
+}
+
+.timelineObject:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.timelineObject:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.durationObject {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.9), rgba(76, 175, 80, 0.7));
+}
+
+.instantObject {
+  background: linear-gradient(135deg, rgba(33, 150, 243, 0.9), rgba(33, 150, 243, 0.7));
+  width: 4px !important;
+  min-width: 4px;
+  border-radius: 2px;
+}
+
+.selected {
+  border-color: #ffffff !important;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5), 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+}
+
+.selected:hover {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7), 0 6px 16px rgba(0, 0, 0, 0.5) !important;
+}
+
+.dragging {
+  opacity: 0.8;
+  transform: rotate(2deg) scale(1.02);
+  z-index: 1000;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6) !important;
+}
+
+.objectContent {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  gap: 2px;
+}
+
+.objectLabel {
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+.objectDuration {
+  font-size: 9px;
+  opacity: 0.8;
+  font-weight: 400;
+}
+
+.resizeHandle {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  cursor: col-resize;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+}
+
+.resizeHandle:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.resizeHandle:active {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.deleteButton {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.timelineObject:hover .deleteButton,
+.selected .deleteButton {
+  opacity: 1;
+}
+
+.deleteButton:hover {
+  background-color: #d32f2f;
+  transform: scale(1.1);
+}
+
+.deleteButton:active {
+  transform: scale(0.95);
+}
+
+.selectionIndicator {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid #ffffff;
+  border-radius: 6px;
+  pointer-events: none;
+  animation: selectionPulse 2s ease-in-out infinite;
+}
+
+@keyframes selectionPulse {
+  0%, 100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* 不同类型的对象样式 */
+.timelineObject[data-type="duration"] {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.9), rgba(76, 175, 80, 0.7));
+}
+
+.timelineObject[data-type="instant"] {
+  background: linear-gradient(135deg, rgba(33, 150, 243, 0.9), rgba(33, 150, 243, 0.7));
+}
+
+/* 颜色变体 */
+.timelineObject[data-color="red"] {
+  background: linear-gradient(135deg, rgba(244, 67, 54, 0.9), rgba(244, 67, 54, 0.7));
+}
+
+.timelineObject[data-color="orange"] {
+  background: linear-gradient(135deg, rgba(255, 152, 0, 0.9), rgba(255, 152, 0, 0.7));
+}
+
+.timelineObject[data-color="yellow"] {
+  background: linear-gradient(135deg, rgba(255, 235, 59, 0.9), rgba(255, 235, 59, 0.7));
+  color: #333;
+}
+
+.timelineObject[data-color="green"] {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.9), rgba(76, 175, 80, 0.7));
+}
+
+.timelineObject[data-color="blue"] {
+  background: linear-gradient(135deg, rgba(33, 150, 243, 0.9), rgba(33, 150, 243, 0.7));
+}
+
+.timelineObject[data-color="purple"] {
+  background: linear-gradient(135deg, rgba(156, 39, 176, 0.9), rgba(156, 39, 176, 0.7));
+}
+
+.timelineObject[data-color="pink"] {
+  background: linear-gradient(135deg, rgba(233, 30, 99, 0.9), rgba(233, 30, 99, 0.7));
+}
+
+.timelineObject[data-color="cyan"] {
+  background: linear-gradient(135deg, rgba(0, 188, 212, 0.9), rgba(0, 188, 212, 0.7));
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .timelineObject {
+    top: 6px;
+    height: calc(100% - 12px);
+    padding: 3px 6px;
+    font-size: 10px;
+    min-width: 50px;
+    border-radius: 3px;
+  }
+
+  .objectLabel {
+    font-size: 9px;
+  }
+
+  .objectDuration {
+    font-size: 8px;
+  }
+
+  .deleteButton {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+/* 动画优化 */
+@media (prefers-reduced-motion: reduce) {
+  .timelineObject {
+    transition: none;
+  }
+
+  .selectionIndicator {
+    animation: none;
+  }
+}

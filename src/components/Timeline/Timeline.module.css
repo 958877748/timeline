@@ -1,0 +1,134 @@
+.timelineContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #1e1e1e;
+  color: #ffffff;
+  border: 1px solid #333;
+  border-radius: 4px;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.timelineBody {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  background-color: #252526;
+}
+
+.controls {
+  border-bottom: 1px solid #333;
+}
+
+.ruler {
+  height: 30px;
+  background-color: #2d2d30;
+  border-bottom: 1px solid #333;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.rulerContent {
+  height: 100%;
+  position: relative;
+  background-image: repeating-linear-gradient(
+    to right,
+    transparent 0px,
+    transparent 99px,
+    #555 99px,
+    #555 100px
+  );
+}
+
+.rulerMark {
+  position: absolute;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background-color: #666;
+}
+
+.rulerLabel {
+  position: absolute;
+  top: 8px;
+  left: 4px;
+  font-size: 11px;
+  color: #cccccc;
+  user-select: none;
+}
+
+.tracksContainer {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: #888;
+  font-size: 14px;
+}
+
+.emptyState p {
+  margin-bottom: 16px;
+}
+
+.addTrackButton {
+  padding: 8px 16px;
+  background-color: #0e639c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.2s;
+}
+
+.addTrackButton:hover {
+  background-color: #1177bb;
+}
+
+.horizontalScrollbar {
+  height: 12px;
+  background-color: #2d2d30;
+  border-top: 1px solid #333;
+  position: relative;
+  overflow: hidden;
+}
+
+.scrollThumb {
+  height: 100%;
+  background-color: #666;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.scrollThumb:hover {
+  background-color: #888;
+}
+
+.scrollThumb:active {
+  background-color: #aaa;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .timelineContainer {
+    font-size: 12px;
+  }
+
+  .ruler {
+    height: 25px;
+  }
+
+  .rulerLabel {
+    font-size: 10px;
+  }
+}
