@@ -1,108 +1,84 @@
 # CLAUDE.md
 
-此文件为 Claude Code (claude.ai/code) 在此代码库中工作时提供指导。
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## 项目概述
+## Project Overview
 
-这是一个纯数据驱动的时间轴工具，类似于 Unity Timeline，使用 TypeScript 和 React 构建。项目提供了带有纯函数的核心数据模型和用于可视化的 React UI 层。
+Timeline Tool is a TypeScript-based timeline editing library with React UI components, designed as a pure data-driven timeline tool similar to Unity Timeline. The project follows a clean three-layer architecture pattern.
 
-## 架构
+## Essential Commands
 
-项目采用双层架构：
-
-### 核心数据层 (`src/`)
-- **TimelineModel**: 通过纯函数管理时间轴状态和操作的主要类
-- **Types**: `src/types/timeline.ts` 中的完整 TypeScript 定义
-- **Utils**: 验证和时间轴操作工具
-- **Data Models**: 使用类似 Redux 操作的不可变状态管理
-
-### React UI 层 (`src/react/`, `src/components/`)
-- **Timeline**: 带缩放/滚动功能的主要时间轴可视化组件
-- **Track**: 用于组织时间轴对象的多轨道支持
-- **TimelineObject**: 支持持续时间和瞬间对象类型
-- **PropertyEditor**: Tweakpane 集成的对象属性编辑器
-- **Adapters**: 纯数据模型和 React 组件之间的桥梁
-
-## 核心功能
-
-- 纯数据驱动架构，支持不可变操作
-- 带缩放和滚动功能的多轨道时间轴
-- 两种对象类型：持续时间对象（开始时间 + 持续时间）和瞬间对象（仅开始时间）
-- 集成 Tweakpane 的属性模板系统
-- 全面的验证和错误处理
-- 状态管理的 React hooks（`useTimeline`、`useTrack`、`useTimelineObject`）
-
-## 开发命令
-
+### Development
 ```bash
-# 核心库构建
-npm run build                    # 构建 TypeScript 到 dist/
-npm run build:react             # 使用 Vite 构建 React 示例
-
-# 开发
-npm run dev                      # 启动 Vite 开发服务器（端口 3000）
-npm run dev:ts                   # TypeScript 监听模式
-
-# 测试
-npm run test                     # 运行 Jest 测试
-npm run test:watch              # Jest 监听模式
-npm run test:coverage           # 生成覆盖率报告
-npm run test:verbose            # 详细测试输出
-
-# 代码质量
-npm run lint                     # ESLint 检查
-npm run lint:fix                 # 自动修复 ESLint 问题
-npm run clean                    # 清理 dist/ 和 coverage/
-
-# 打包
-npm run prepublishOnly           # 发布前清理 + 构建
+npm run dev          # Start React demo at http://localhost:3000
+npm run build        # Build TypeScript library to dist/
+npm run build:react  # Build React demo with Vite
 ```
 
-## 项目结构
-
-```
-src/
-├── types/timeline.ts           # 核心 TypeScript 定义
-├── models/TimelineModel.ts     # 主要数据模型类
-├── utils/                      # 验证和工具函数
-├── data/mockData.ts           # 示例数据和工厂函数
-├── hooks/                     # 状态管理的 React hooks
-├── components/                # React UI 组件
-│   ├── Timeline/              # 主要时间轴可视化
-│   ├── Track/                 # 轨道组件
-│   ├── TimelineObject/        # 时间轴对象组件
-│   ├── TimelineControls/      # 缩放/滚动控件
-│   └── PropertyEditor/        # Tweakpane 属性编辑器
-├── adapters/                  # 数据-UI 桥接层
-└── react/index.ts            # React 层入口点
+### Testing & Quality
+```bash
+npm test                    # Run all tests
+npm run test:coverage       # Run tests with coverage report
+npm run lint               # Run ESLint
 ```
 
-## 数据模型核心概念
+### Single Test Execution
+```bash
+npm test -- tests/models/TimelineModel.test.ts  # Run specific test file
+npm test -- --watch                            # Run tests in watch mode
+```
 
-- **TimelineState**: 完整的时间轴状态，包括轨道、缩放、滚动、选择
-- **TimelineAction**: 用于状态变更的 Redux 风格操作
-- **TimelineObject**: 基础对象类型，支持持续时间/瞬间变体
-- **PropertyTemplate**: 对象的可配置属性架构
-- **Validation**: 内置重叠检测和时间范围验证
+## Architecture
 
-## 测试策略
+### Three-Layer Design
 
-项目使用 Jest 和 React Testing Library。测试应覆盖：
-- `src/utils/` 中的纯函数工具
-- TimelineModel 状态变更
-- React 组件渲染和交互
-- 验证和错误场景
+1. **Data Layer** (`src/models/`, `src/utils/`, `src/types/`)
+   - Pure TypeScript logic, framework-agnostic
+   - Immutable operations and pure functions
+   - Core timeline data structures and validation
 
-## 构建系统
+2. **Glue Layer** (`src/hooks/`, `src/adapters/`)
+   - Connects React components to pure data logic
+   - `useTimeline`, `useTrack`, `useTimelineObject` hooks
+   - `TimelineAdapter` for lifecycle management
 
-- **核心库**: TypeScript 编译到 `dist/`
-- **React 示例**: Vite 构建到 `dist-examples/`
-- **CSS Modules**: 使用 camelCase 命名的组件作用域样式
-- **路径别名**: `@/` 映射到 `src/` 用于导入
+3. **UI Layer** (`src/components/`)
+   - Pure React components with props/callbacks
+   - CSS Modules for styling (supports dark theme)
+   - Tweakpane integration for property editing
 
-## 属性编辑器集成
+### Key Components
 
-使用 Tweakpane (`@tweakpane/plugin-essentials`) 进行属性编辑：
-- 在 TimelineModel 中定义的固定属性模板
-- 与选定时间轴对象的动态绑定
-- 支持字符串、数字、布尔值、颜色、选择类型
+- **Timeline**: Main visualization component with multi-track support
+- **Track**: Individual track management with drag-and-drop
+- **TimelineObject**: Duration/instant object rendering and manipulation
+- **PropertyEditor**: Tweakpane-based property editing interface
+- **TimelineControls**: Playback and view controls
+
+### State Management Pattern
+
+The project uses a custom hook-based state management approach:
+- `useTimeline` manages the main timeline state
+- Components receive data via props and emit changes via callbacks
+- State changes flow through the adapter layer to maintain React lifecycle compatibility
+
+## Code Style Guidelines
+
+- **TypeScript**: Strict mode enabled, comprehensive type definitions
+- **Formatting**: 2-space indentation, single quotes, semicolons required
+- **Line Length**: Max 120 characters
+- **Component Pattern**: Functional components with TypeScript interfaces
+- **CSS**: CSS Modules with camelCase convention, supports theming
+
+## Testing Approach
+
+- **Framework**: Jest with React Testing Library
+- **Coverage**: Comprehensive test suites for models, utilities, and React components
+- **Mock Data**: Located in `src/data/` for testing scenarios
+- **Environment**: jsdom for DOM testing capabilities
+
+## Build Outputs
+
+- **Library**: `dist/` (CommonJS + TypeScript declarations)
+- **Demo**: `examples/dist/` (Vite build output)
+- **Entry Point**: `dist/index.js` with full TypeScript support
