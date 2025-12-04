@@ -1,0 +1,17 @@
+{
+  "name": "时间轴工具",
+  "short_name": "时间轴",
+  "description": "专业的时间轴编辑工具",
+  "theme_color": "#1e1e1e",
+  "background_color": "#1e1e1e",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "timeline-icon.svg",
+      "sizes": "144x144",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -3,10 +3,13 @@ import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 
 export default defineConfig({
-  plugins: [react()],
-  root: 'examples',
+  plugins: [react({
+    jsxRuntime: 'automatic',
+    jsxImportSource: 'react'
+  })],
+  base: './',
   build: {
-    outDir: '../dist-examples',
+    outDir: 'dist-examples',
     emptyOutDir: true,
   },
   server: {
